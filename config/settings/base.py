@@ -7,6 +7,7 @@ APPS_DIR = ROOT_DIR.path('drones')
 
 env = environ.Env()
 
+
 # Base
 DEBUG = env.bool('DJANGO_DEBUG', False)
 
@@ -51,7 +52,8 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     'drones.users.apps.UsersAppConfig',
-    'drones.api.apps.ApiAppConfig'
+    'drones.api.apps.ApiAppConfig',
+    'drones.drone_model.apps.DroneModelAppConfig'
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -174,3 +176,8 @@ REST_FRAMEWORK = {
 
 # Django CROS
 CORS_ORIGIN_WHITELIST = env.list('DJANGO_CORS_ORIGIN', default=[])
+
+
+# Custom
+DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+

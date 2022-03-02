@@ -25,7 +25,7 @@ class User(BaseModel, AbstractUser):
             'unique': 'A user with that email already exists.'
         }
     )
-
+    
     is_client = models.BooleanField(
         'client',
         default=True,

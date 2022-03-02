@@ -10,6 +10,6 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
 
     path('api/', include(('drones.api.urls', 'api'), namespace='apis')),
-    path('', include(('drones.users.urls', 'users'), namespace='users')),
+    path('', include(('drones.users.urls', 'users'), namespace='users'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

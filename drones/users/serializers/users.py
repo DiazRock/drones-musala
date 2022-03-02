@@ -35,6 +35,8 @@ class UserModelSerializer(serializers.ModelSerializer):
             'phone_number',
             'profile'
         )
+    
+    
 
 
 class UserSignUpSerializer(serializers.Serializer):

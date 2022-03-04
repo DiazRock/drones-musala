@@ -4,13 +4,13 @@
 from django.contrib import admin
 
 # Models
-from drones.api.models import Post
+from drones.api.models import Drone, Medication
 
-@admin.register(Post)
+@admin.register(Drone, Medication)
 class PostAdmin(admin.ModelAdmin):
     
-    list_display = ('title','created')
-    search_fields = ('title',)
+    list_display = ('id','created', 'modified')
+    search_fields = ('created',)
     list_filter = ('created',)
 
  

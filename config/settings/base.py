@@ -52,9 +52,7 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     'drones.users.apps.UsersAppConfig',
-    'drones.api.apps.ApiAppConfig',
-    'drones.drone_model.apps.DroneModelAppConfig',
-    'drones.medication.apps.MedicationAppConfig'
+    'drones.api.apps.ApiAppConfig'
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 

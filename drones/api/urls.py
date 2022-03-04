@@ -7,10 +7,12 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 # Views
-from drones.api.views import posts as post_views
+from drones.api.views import drone_views
 
 router = DefaultRouter()
-router.register(r'posts', post_views.PostViewSet, basename='post')
+router.register(r'drone', drone_views.DroneViewSet, basename='drone')
+
+#import ipdb; ipdb.set_trace()
 
 urlpatterns = [
     path('', include(router.urls))

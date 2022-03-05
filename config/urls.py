@@ -9,7 +9,7 @@ urlpatterns = [
     # Django Admin
     path(settings.ADMIN_URL, admin.site.urls),
 
-    path('api/', include(('drones.api.urls', 'apis'), namespace='drone_model')),
-    path('', include(('drones.users.urls', 'users'), namespace='users'))
+    path('', include(('drones.users.urls', 'users'), namespace='users')),
+    path('api/', include(('drones.api.urls', 'apis'), namespace='drone_model'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

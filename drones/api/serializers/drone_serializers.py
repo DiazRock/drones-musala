@@ -2,6 +2,7 @@
 
 # Django REST Framework
 from drones.api.models.drone_models import Medication
+from drones.utils import constants
 from rest_framework import serializers
 
 
@@ -41,9 +42,11 @@ class DroneModelSerializer(
         print("Inside update")
         print(validated_data)
         print("**************")
+        instance.status = constants.ld
         medications = Medication.objects.filter(pk=validated_data['pk_med'])
         if self.weight_validation(medications.first(), instance):
             instance.medications.set(medications)
+
         else:
             raise serializers.ValidationError('Can\'t exced drone weight limit')
         

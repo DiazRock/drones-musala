@@ -16,18 +16,11 @@ class DroneViewSet(viewsets.ModelViewSet):
     queryset= Drone.objects.all()
     #model= Drone
 
-    # def get_queryset(self):
-    #     """ Query set defined for drone """
-    #     drone_id = self.kwargs.get('drone_id', False) 
-    #     if drone_id:
-    #         return self.queryset.filter(pk= drone_id)
-    #     return Drone.objects.all()
 
-    # def partial_update(self, request, *args, **kwargs):
-    #     return self.update(request, *args, **kwargs)
- 
-    # def update(self, request, *args, **kwargs):
-    #     return self.serializer_class.update(request.data)
+    def partial_update(self, request, *args, **kwargs):
+        self.kwargs['pk'] = kwargs['drone_id']
+        return self.update(request, *args, **kwargs)
+
         
 
 class MedicationViewSet(viewsets.ModelViewSet):

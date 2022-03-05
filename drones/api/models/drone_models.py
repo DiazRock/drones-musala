@@ -9,6 +9,42 @@ from django.utils.translation import gettext_lazy as _
 from drones.utils.models import BaseModel
 from drones.utils.constants import modelTypes, stateTypes, lg, idle
 
+
+class Medication(BaseModel):
+    """Medication model.
+
+    The representation of a Medication for the bussines logic.
+    """
+
+    image = models.ImageField(
+        upload_to="meds",
+        help_text="The image of the med"
+        )
+    weight = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        help_text="The weight in gr of the med"
+    )
+    name = models.CharField(
+        max_length=100,
+        unique=True,
+        blank=False,
+        null=False
+    )
+
+    code = models.CharField(
+        max_length=100,
+        unique=True,
+        blank=False,
+        null=False
+    )
+    
+    def __str__(self) -> str:
+        """Return username."""
+        return self.name
+
+
+
 class Drone(BaseModel):
     """Drone model.
 
@@ -41,49 +77,10 @@ class Drone(BaseModel):
         help_text="The percent capacity of the battery"
     )
 
-    
-    medications=models.ForeignKey(
-        "Medication",
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name="drones")
+    medications = models.ManyToManyField(Medication)
+
     def __str__(self) -> str:
         """Return username."""
         return self.serial_number
     
 
-class Medication(BaseModel):
-    """Medication model.
-
-    The representation of a Medication for the bussines logic.
-    """
-
-    image = models.ImageField(
-        upload_to="meds",
-        help_text="The image of the med"
-        )
-    weight = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        help_text="The weight in gr of the med"
-    )
-    name = models.CharField(
-        max_length=100,
-        unique=True,
-        blank=False,
-        null=False
-    )
-
-    code = models.CharField(
-        max_length=100,
-        unique=True,
-        blank=False,
-        null=False
-    )
-
-    drone_carrier = models.ForeignKey("Drone",
-    on_delete=models.SET_NULL, null=True, related_name="medication")
-    
-    def __str__(self) -> str:
-        """Return username."""
-        return self.name

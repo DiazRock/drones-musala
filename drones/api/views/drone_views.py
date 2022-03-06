@@ -1,7 +1,5 @@
 from django.http.response import Http404
-from rest_framework import status, mixins, permissions
 from rest_framework.decorators import action
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from drones.api.models import Drone, Medication
 from drones.api.serializers import DroneModelSerializer, MedicationModelSerializer 
@@ -81,6 +79,8 @@ class DroneViewSet(viewsets.ModelViewSet):
         if request.method == 'PATCH':
             if request.data['state'] == 'IDLE':
                 request.data['battery_capacity'] = 100
+            if request.data['state'] == 'DELIVERED':
+                request.data['battery_capacity'] -= 20
             serializer = self.get_serializer(
                 current_drone,
                 data = request.data,

@@ -79,8 +79,8 @@ class DroneViewSet(viewsets.ModelViewSet):
         if request.method == 'PATCH':
             if request.data['state'] == 'IDLE':
                 request.data['battery_capacity'] = 100
-            if request.data['state'] == 'DELIVERED':
-                request.data['battery_capacity'] -= 20
+            if request.data['state'] == 'DELIVERED' and current_drone.battery_capacity >= 20:
+                request.data['battery_capacity'] = current_drone.battery_capacity - 20
             serializer = self.get_serializer(
                 current_drone,
                 data = request.data,

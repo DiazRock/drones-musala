@@ -77,4 +77,11 @@ curl --location --request PATCH '<URL DJANGO SERVER>/api/drone/<int: pk>/state/'
 This will decrease the battery capacity 20%.
 
 
+# Checking the periodic task
+
+You can open the flower portal in the browser clicking on
+http://0.0.0.0:5555
+
+Then enter the cretendials from .envs/.local/.django
+
 

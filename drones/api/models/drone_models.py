@@ -57,7 +57,8 @@ class Drone(BaseModel):
        Cruiseweight= 'CR', _("Cruiseweight")
        Heavyweight= 'HW', _('Heavyweight')
         
-    model = models.PositiveSmallIntegerField(
+    model = models.CharField(
+        max_length = 2,
         choices = modelChoices.choices,
         default = modelChoices.Ligthweight,
         help_text = "The model type of the drone"
@@ -72,9 +73,10 @@ class Drone(BaseModel):
        RETURNING = 'RE',_('RETURNING')
         
     
-    state = models.PositiveSmallIntegerField(
+    state = models.CharField(
         choices = stateChoices.choices,
         default = stateChoices.IDLE,
+        max_length = 2,
         help_text = "The current state of the drone"
     )
     serial_number = models.CharField(

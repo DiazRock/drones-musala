@@ -31,8 +31,10 @@ class DroneModelSerializer(
     def validate(self, data):
         """ Validate no more drones than the fleet. """
         ret = super().validate(data)
-        pk = self.context['view'].kwargs['pk']
-        instance = Drone.objects.get(pk=pk)
+        pk = self.context['view'].kwargs.get('pk', False)
+        instance = False
+        if pk:
+            instance = Drone.objects.get(pk=pk)
         drone_count = Drone.objects.count()
         if drone_count > 10 and not instance:
             raise serializers.ValidationError('No more drones allowed')

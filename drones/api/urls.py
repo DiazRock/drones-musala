@@ -3,19 +3,19 @@
 # Django
 from django.urls import include, path
 
+# Django Rest Framework
+from rest_framework.routers import SimpleRouter
+
 # Views
 from drones.api.views import drone_views
 
 # Utils
 from drones.utils.router import BulkRouter
 
-router = BulkRouter()
-router.register(r'drone', drone_views.DroneViewSet, basename='drone_views')
-router.register('drone/available', drone_views.DroneViewSet, basename='drone_views')
-router.register(r'drone/(?P<drone_id>\d+)/load', drone_views.DroneViewSet, basename='drone_views')
-router.register(r'medication', drone_views.DroneViewSet, basename='drone_views')
+router = SimpleRouter()
+router.register(r'drone', drone_views.DroneViewSet, basename='drone')
+router.register(r'medication', drone_views.MedicationViewSet, basename='medication')
 
-#import ipdb; ipdb.set_trace()
 
 urlpatterns = [
     path('', include(router.urls))

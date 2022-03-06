@@ -2,12 +2,10 @@
 
 # Django
 from django.db import models
-from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
 # Utilities
 from drones.utils.models import BaseModel
-from drones.utils.constants import modelTypes, stateTypes, lg, idle
 
 
 class Medication(BaseModel):
@@ -52,31 +50,31 @@ class Drone(BaseModel):
     """
 
     class modelChoices(models.TextChoices):
-       Ligthweight= 'LI', _("Ligthweight")
-       Middleweight= 'MI', _("Middleweight")
-       Cruiseweight= 'CR', _("Cruiseweight")
-       Heavyweight= 'HW', _('Heavyweight')
+       Ligthweight= 'Ligthweight', _("Ligthweight")
+       Middleweight= 'Middleweight', _("Middleweight")
+       Cruiseweight= 'Cruiseweight', _("Cruiseweight")
+       Heavyweight= 'Heavyweight', _('Heavyweight')
         
     model = models.CharField(
-        max_length = 2,
+        max_length = 12,
         choices = modelChoices.choices,
         default = modelChoices.Ligthweight,
         help_text = "The model type of the drone"
     )
 
     class stateChoices(models.TextChoices):
-       IDLE = 'ID',_("IDLE")
-       LOADING = 'LA',_('LOADING')
-       LOADED = 'LO',_('LOADED')
-       DELIVERING = 'DI',_('DELIVERING')
-       DELIVERED = 'DE',_('DELIVERED')
-       RETURNING = 'RE',_('RETURNING')
+       IDLE = 'IDLE',_("IDLE")
+       LOADING = 'LOADING',_('LOADING')
+       LOADED = 'LOADED',_('LOADED')
+       DELIVERING = 'DELIVERING',_('DELIVERING')
+       DELIVERED = 'DELIVERED',_('DELIVERED')
+       RETURNING = 'RETURNING',_('RETURNING')
         
     
     state = models.CharField(
         choices = stateChoices.choices,
         default = stateChoices.IDLE,
-        max_length = 2,
+        max_length = 12,
         help_text = "The current state of the drone"
     )
     serial_number = models.CharField(

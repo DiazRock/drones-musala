@@ -9,7 +9,6 @@ class BulkRouter(DefaultRouter):
     """
     routes = copy.deepcopy(SimpleRouter.routes)
     routes[0].mapping.update({
-        'put': 'update',
-        'patch': 'partial_update'
+        'put': 'update'
     })
 

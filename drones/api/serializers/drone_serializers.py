@@ -41,15 +41,17 @@ class DroneModelSerializer(
 
 
     def update(self, instance, validated_data):
-        if instance.battery_capacity < 25:
-            raise serializers.ValidationError('Drone can\'t enter in LOADING status with battery capacity lower than 25%')
-        instance.status = constants.ld
-        medications = validated_data['medications']
-        if self.weight_validation(medications, instance):
-            instance.medications.set(medications)
-        else:
-            raise serializers.ValidationError('Can\'t exced drone weight limit')
-        return instance
+        medications = validated_data.get('medications', False)
+        if medications:
+            if instance.battery_capacity < 25:
+                raise serializers.ValidationError('Drone can\'t enter in LOADING status with battery capacity lower than 25%')
+            instance.status = constants.ld
+            if self.weight_validation(medications, instance):
+                instance.medications.set(medications)
+            else:
+                raise serializers.ValidationError('Can\'t exced drone weight limit')
+            return instance
+        return super().update(instance, validated_data)
 
     def weight_validation(self, medications_list, drone_instance):
         medications = drone_instance.medications.all()

@@ -2,46 +2,33 @@
 
 # Django
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils import timezone
 
-# Models
-from drones.users.models import users
+#Model
+from drones.api.models import Drone
 
 # Celery
 from celery.decorators import task, periodic_task
+from celery.task.schedules import crontab
+from celery.utils.log import get_task_logger
+
 
 # Utilities
-import jwt
-import time
 from datetime import timedelta
 
 
-def gen_verification_token(user):
-    """Create JWT token that the user can use to verify its account."""
-    exp_date = timezone.now() + timedelta(days=3)
-    payload = {
-        'user': user.username,
-        'exp': int(exp_date.timestamp()),
-        'type': 'email_confirmation'
-    }
-    token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
-    return token.decode()
+logger = get_task_logger(__name__)
 
 
-@task(name='send_confirmation_email', max_retries=3)
-def send_confirmation_email(user_pk):
-    """Send account verification link to given user."""
-    user = User.objects.get(pk=user_pk)
-    verification_token = gen_verification_token(user)
-    subject = 'Welcome @{}! Verify your account to start using Comparte Ride'.format(user.username)
-    from_email = 'Comparte Ride <noreply@comparteride.com>'
-    content = render_to_string(
-        'emails/users/account_verification.html',
-        {'token': verification_token, 'user': user}
-    )
-    msg = EmailMultiAlternatives(subject, content, from_email, [user.email])
-    msg.attach_alternative(content, "text/html")
-    msg.send()
-
+@periodic_task(
+    run_every=(timedelta(seconds=10)),
+    name="check drone battery capacity for the drone fleet",
+    ignore_result=True
+)
+def check_available_drones():
+    """Check the battery capacity of the drones and send the info to a log file."""
+    drones = Drone.objects.all()
+    logger.info("Checking battery capacity of the drone fleet")
+    a = [x for x in drones.values()]
+    logger.info('\n'.join('Drone:{2}---{0}:{1}'.format(x['serial_number'], x['battery_capacity'], x['id']) for x in a))

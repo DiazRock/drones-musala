@@ -3,14 +3,17 @@
 # Django
 from django.urls import include, path
 
-# Django REST Framework
-from rest_framework.routers import DefaultRouter
+# Django Rest Framework
+from rest_framework.routers import SimpleRouter
 
 # Views
-from drones.api.views import posts as post_views
+from drones.api.views import drone_views
 
-router = DefaultRouter()
-router.register(r'posts', post_views.PostViewSet, basename='post')
+
+router = SimpleRouter()
+router.register(r'drone', drone_views.DroneViewSet, basename='drone')
+router.register(r'medication', drone_views.MedicationViewSet, basename='medication')
+
 
 urlpatterns = [
     path('', include(router.urls))

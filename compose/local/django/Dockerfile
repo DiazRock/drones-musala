@@ -17,7 +17,11 @@ RUN apk update \
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements /requirements
-RUN pip install -r /requirements/local.txt
+RUN pip3.6 install -r /requirements/local.txt
+RUN pip3.6 install argon2_cffi
+RUN pip3.6 install django[argon2]
+RUN python3 -m pip install argon2_cffi
+RUN python3 -m pip install -U cffi pip setuptools
 
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r//' /entrypoint

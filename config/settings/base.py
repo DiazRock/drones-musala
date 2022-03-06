@@ -7,6 +7,7 @@ APPS_DIR = ROOT_DIR.path('drones')
 
 env = environ.Env()
 
+
 # Base
 DEBUG = env.bool('DJANGO_DEBUG', False)
 
@@ -30,8 +31,6 @@ ROOT_URLCONF = 'config.urls'
 # WSGI
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Users & Authentication
-AUTH_USER_MODEL = 'users.User'
 
 # Apps
 DJANGO_APPS = [
@@ -50,7 +49,6 @@ THIRD_PARTY_APPS = [
     'corsheaders',
 ]
 LOCAL_APPS = [
-    'drones.users.apps.UsersAppConfig',
     'drones.api.apps.ApiAppConfig'
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -162,6 +160,9 @@ CELERYD_TASK_SOFT_TIME_LIMIT = 60
 
 # Django REST Framework
 REST_FRAMEWORK = {
+   'DEFAULT_PERMISSION_CLASSES': [
+       'rest_framework.permissions.AllowAny'
+   ],
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
@@ -174,3 +175,8 @@ REST_FRAMEWORK = {
 
 # Django CROS
 CORS_ORIGIN_WHITELIST = env.list('DJANGO_CORS_ORIGIN', default=[])
+
+
+# Custom
+DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+

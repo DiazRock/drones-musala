@@ -77,7 +77,7 @@ class Drone(BaseModel):
         help_text="The percent capacity of the battery"
     )
 
-    medications = models.ManyToManyField(Medication)
+    medications = models.ManyToManyField(Medication, null=True)
 
     def __str__(self) -> str:
         """Return username."""

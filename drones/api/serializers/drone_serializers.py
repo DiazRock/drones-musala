@@ -2,9 +2,7 @@
 
 # Django REST Framework
 from drones.api.models.drone_models import Medication
-from drones.utils import constants
 from rest_framework import serializers
-
 
 # Models
 from drones.api.models import Drone
@@ -47,9 +45,9 @@ class DroneModelSerializer(
         if medications:
             if instance.battery_capacity < 25:
                 raise serializers.ValidationError('Drone can\'t enter in LOADING status with battery capacity lower than 25%')
-            instance.status = constants.ld
+            instance.state = 'LOADING'
             if self.weight_validation(medications, instance):
-                instance.medications.set(medications)
+                instance.medications.set(medications + list (instance.medications.all()))
             else:
                 raise serializers.ValidationError('Can\'t exced drone weight limit')
             return instance

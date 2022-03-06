@@ -9,8 +9,6 @@ from rest_framework.routers import SimpleRouter
 # Views
 from drones.api.views import drone_views
 
-# Utils
-from drones.utils.router import BulkRouter
 
 router = SimpleRouter()
 router.register(r'drone', drone_views.DroneViewSet, basename='drone')
